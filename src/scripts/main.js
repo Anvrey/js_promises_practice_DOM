@@ -2,9 +2,10 @@
 
 const body = document.body;
 
-const promise1 = new Promise((resolve, reject) => {
+const firstPromise = new Promise((resolve, reject) => {
   const timerId = setTimeout(() => {
-    reject(new Error('First promise was rejected'));
+    // eslint-disable-next-line prefer-promise-reject-errors
+    reject('First promise was rejected');
   }, 3000);
 
   body.addEventListener('click', () => {
@@ -13,7 +14,7 @@ const promise1 = new Promise((resolve, reject) => {
   });
 });
 
-const promise2 = new Promise((resolve) => {
+const secondPromise = new Promise((resolve) => {
   body.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     resolve('Second promise was resolved');
@@ -24,7 +25,7 @@ const promise2 = new Promise((resolve) => {
   });
 });
 
-const promise3 = new Promise((resolve) => {
+const thirdPromise = new Promise((resolve) => {
   let left = false;
   let right = false;
 
@@ -63,7 +64,6 @@ function onErrorFirst(message) {
   div.textContent = message;
   document.body.append(div);
 }
-
-promise1.then(onSuccessFirst).catch(onErrorFirst);
-promise2.then(onSuccessFirst);
-promise3.then(onSuccessFirst);
+firstPromise.then(onSuccessFirst).catch(onErrorFirst);
+secondPromise.then(onSuccessFirst);
+thirdPromise.then(onSuccessFirst);
